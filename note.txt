@@ -1,0 +1,48 @@
+ADMAS
+
+FLOW APLIKASI
+	
+	1. Tampilkan Landing Page
+		- terdapat menu login
+	2. Login
+		- petugas & pelapor 
+	3. Masuk Dasbor 
+		- Menampilkan list laporan yang telah dibuat
+		- 5 card menampilkan count total laporan masing masing status
+	4. Membuat Laporan Baru
+		- Memilih kategori laporan
+		- Isi deskripsi laporan
+		- Upload foto laporan (opsional)
+		- Input lokasi laporan
+	5. Logout
+		- menuju halaman landing page
+
+
+
+ENTITAS & ATRIBUT:
+
+	PETUGAS
+	nik_petugas		[varchar(16)]
+	nama_petugas		[varchar(50)]
+	username_petugas	[varchar(25)]
+	pass_petugas		[varchar(25)]
+	telp_petugas		[varchar(13)]
+	level_petugas		[enum("admin", "petugas")]
+
+	PELAPOR
+	nik_pelapor		[varchar(16)]
+	nama_pelapor		[varchar(50)]
+	username_pelapor	[varchar(25)]
+	pass_pelapor		[varchar(25)]
+	telp_pelapor		[varchar(13)]
+
+	KATEGORI LAPORAN
+	id_kategori		[int(11)]
+	jenis_kategori		[enum("Penyalahgunaan wewenang","Pelayanan publik/masyarakat")]
+
+	LAPORAN
+	id_laporan		[int(11)]
+	tanggal_laporan		[date]
+	lokasi_laporan		[text(100)]
+	deskripsi_laporan	[text(150)]
+	status_laporan		[enum("baru", "validasi", "konfirmasi", "diproses", "selesai")]
