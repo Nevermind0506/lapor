@@ -133,6 +133,7 @@ $_SESSION['page'] = $active_page;
 
                 </ul>
             </nav>
+            <!-- TEST -->
             <!-- End Sidebar Left -->
             <!-- Content start -->
             <?php include "dashboard.php"; ?>
