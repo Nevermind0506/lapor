@@ -32,7 +32,7 @@
               </div>
               <h3 class="mt-0 text-center text-primary">Lapor!</h3>
               <h6 class="font-weight-light">
-                Signing up is easy. It only takes a few steps
+                Registrasi mudah!. Lengkapi data diri anda
               </h6>
               <form action="../controller/register_controller.php" method="post" class="pt-3">
                 <!-- NIK -->
@@ -61,6 +61,9 @@
                 <div class="text-center mt-4 font-weight-light">
                   Sudah punya akun?
                   <a href="login_page.php" class="text-primary">Masuk</a>
+                  <br>
+                  <br>
+                  <a class="btn btn-sm btn-outline-primary" href="landing_page.php"><i class="icon-grid mr-2"></i>Dashboard</a>
                 </div>
               </form>
             </div>

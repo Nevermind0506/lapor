@@ -23,20 +23,26 @@
     <div class="container-scroller">
         <div class="container-fluid page-body-wrapper full-page-wrapper">
             <div class="content-wrapper d-flex align-items-center auth px-0">
+
                 <div class="row w-100 mx-0">
+
                     <div class="col-lg-4 mx-auto">
+
                         <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+
                             <div class="brand-logo text-center">
                                 <img src="../lapor!_logo.jpeg" alt="logo" style="width: 80px;">
                             </div>
+
                             <h3 class="mt-0 text-center text-primary">Lapor!</h3>
+
                             <h6 class="text-center font-weight-light">Silahkan masukan akun anda</h6>
                             <form action="../controller/login_controller.php" method="post" class="pt-3">
                                 <div class="form-group">
-                                    <input name="username_log" type="text" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username">
+                                    <input required name="username_log" type="text" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username">
                                 </div>
                                 <div class="form-group">
-                                    <input name="pass_log" type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
+                                    <input required name="pass_log" type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
                                 </div>
                                 <div class="mt-3">
                                     <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">LOGIN</button>
@@ -45,6 +51,9 @@
 
                                 <div class="text-center mt-4 font-weight-light">
                                     Belum punya akun? <a href="register_page.php" class="text-primary">Buat akun</a>
+                                    <br>
+                                    <br>
+                                    <a class="btn btn-sm btn-outline-primary" href="landing_page.php"><i class="icon-grid mr-2"></i>Dashboard</a>
                                 </div>
                             </form>
                         </div>
