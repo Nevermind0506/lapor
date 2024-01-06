@@ -1,6 +1,15 @@
 <?php
 include "../connection.php";
 $db = new database();
+if (!empty($_SESSION['nik_log'])) {
+    if ($_SESSION['level_log'] == 'pelapor') {
+        header("location: ../views/pelapor/dashboard_page.php");
+    } elseif ($_SESSION['level_log'] == 'petugas') {
+        header("location: ../views/petugas/dashboard_page.php");
+    } elseif ($_SESSION['level_log'] == 'admin') {
+        header("location: ../views/admin/dashboard_page.php");
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -106,7 +115,7 @@ $db = new database();
                                         <div class="card-body">
                                             <p class="mb-4">Total Laporan Masuk</p>
                                             <p class="fs-30 mb-2"><?php echo $db->CountTotalLaporan(); ?></p>
-                                            <p>22.00% (30 days)</p>
+
                                         </div>
                                     </div>
                                 </div>
@@ -117,7 +126,7 @@ $db = new database();
                                         <div class="card-body">
                                             <p class="mb-4">Total Tanggapan</p>
                                             <p class="fs-30 mb-2">3</p>
-                                            <p>2.00% (30 days)</p>
+
                                         </div>
                                     </div>
                                 </div>
@@ -126,7 +135,7 @@ $db = new database();
                                         <div class="card-body">
                                             <p class="mb-4">Total Petugas</p>
                                             <p class="fs-30 mb-2">105</p>
-                                            <p>0.22% (30 days)</p>
+
                                         </div>
                                     </div>
                                 </div>
@@ -160,80 +169,15 @@ $db = new database();
 
 
                     <div class="row">
-                        <div class="col-md-8 stretch-card grid-margin">
-                            <div class="card">
-                                <div class="card-body">
-                                    <p class="card-title mb-0">Projects</p>
-                                    <div class="table-responsive">
-                                        <table class="table table-borderless">
-                                            <thead>
-                                                <tr>
-                                                    <th class="pl-0  pb-2 border-bottom">Places</th>
-                                                    <th class="border-bottom pb-2">Orders</th>
-                                                    <th class="border-bottom pb-2">Users</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="pl-0">Kentucky</td>
-                                                    <td>
-                                                        <p class="mb-0"><span class="font-weight-bold mr-2">65</span>(2.15%)</p>
-                                                    </td>
-                                                    <td class="text-muted">65</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="pl-0">Ohio</td>
-                                                    <td>
-                                                        <p class="mb-0"><span class="font-weight-bold mr-2">54</span>(3.25%)</p>
-                                                    </td>
-                                                    <td class="text-muted">51</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="pl-0">Nevada</td>
-                                                    <td>
-                                                        <p class="mb-0"><span class="font-weight-bold mr-2">22</span>(2.22%)</p>
-                                                    </td>
-                                                    <td class="text-muted">32</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="pl-0">North Carolina</td>
-                                                    <td>
-                                                        <p class="mb-0"><span class="font-weight-bold mr-2">46</span>(3.27%)</p>
-                                                    </td>
-                                                    <td class="text-muted">15</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="pl-0">Montana</td>
-                                                    <td>
-                                                        <p class="mb-0"><span class="font-weight-bold mr-2">17</span>(1.25%)</p>
-                                                    </td>
-                                                    <td class="text-muted">25</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="pl-0">Nevada</td>
-                                                    <td>
-                                                        <p class="mb-0"><span class="font-weight-bold mr-2">52</span>(3.11%)</p>
-                                                    </td>
-                                                    <td class="text-muted">71</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="pl-0 pb-0">Louisiana</td>
-                                                    <td class="pb-0">
-                                                        <p class="mb-0"><span class="font-weight-bold mr-2">25</span>(1.32%)</p>
-                                                    </td>
-                                                    <td class="pb-0">14</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 stretch-card grid-margin">
+
+
+                        <div class="col-md-12 stretch-card grid-margin">
                             <div class="card">
                                 <div class="card-body">
                                     <p class="card-title text-primary">Mengapa di kategorikan?</p>
+                                    <p class="font-weight-500">Mengkategorikan jenis laporan masyarakat memiliki manfaat utama dalam manajemen informasi. Pertama, kategorisasi memungkinkan organisasi menentukan prioritas penanganan dengan menilai tingkat urgensi dan kepentingan berbagai jenis laporan. Kedua, dengan mengetahui jenis laporan yang paling umum atau kritis, organisasi dapat mengalokasikan sumber daya mereka secara efektif, termasuk personel, waktu, dan anggaran. Ketiga, kategorisasi memungkinkan analisis data yang lebih baik, membantu organisasi dalam mengevaluasi tren, pola, dan statistik terkait dengan berbagai masalah atau kejadian. Dengan merancang sistem kategorisasi yang efisien, organisasi dapat meningkatkan efisiensi, akurasi, dan responsabilitas dalam menangani laporan masyarakat.</p>
                                 </div>
+
                             </div>
 
                         </div>

@@ -275,6 +275,31 @@ $db = new database();
                                                                     <hr>
                                                                     <h6>Lokasi</h6>
                                                                     <p><?php echo $all_laporan['lokasi_laporan']; ?></p>
+                                                                    <hr>
+                                                                    <h6>Tanggapan Petugas</h6>
+
+                                                                    <?php
+                                                                    if ($db->ShowTanggapan($all_laporan['id_laporan']) == 0) {
+                                                                    ?>
+                                                                        <div class="alert alert-light" role="alert">
+                                                                            <p class="text-dark">Belum ada tanggapan dari petugas</p>
+
+                                                                        </div>
+
+                                                                        <?php
+                                                                    } else {
+                                                                        $SA_tanggapan = $db->ShowTanggapan($all_laporan['id_laporan']);
+                                                                        foreach ($SA_tanggapan as $tanggapan) {
+                                                                        ?><div class="alert alert-light" role="alert">
+                                                                                <p class="text-dark"><?php echo $tanggapan['tanggapan']; ?></p>
+                                                                                <small>-<?php echo $tanggapan['nama_petugas']; ?> - <?php echo $tanggapan['tgl_tanggapan'] ?></small>
+
+                                                                            </div>
+                                                                    <?php
+                                                                        }
+                                                                    };
+                                                                    ?>
+
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-primary" data-dismiss="modal">Kembali</button>

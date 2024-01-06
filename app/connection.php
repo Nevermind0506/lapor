@@ -241,4 +241,32 @@ class database
         }
         return $all_laporan;
     }
+    //Tampil Tanggapan
+    function ShowTanggapan($id_laporan)
+    {
+        $sql = "SELECT laporan.id_laporan, tanggapan.id_tanggapan, tanggapan.tanggapan, tanggapan.tgl_tanggapan, petugas.nama_petugas FROM `tanggapan` INNER JOIN laporan ON laporan.id_laporan = tanggapan.id_laporan INNER JOIN petugas ON petugas.nik_petugas = tanggapan.nik_petugas WHERE laporan.id_laporan = '" . $id_laporan . "';";
+        $sql_execute = mysqli_query($this->connection, $sql);
+        $count = mysqli_num_rows($sql_execute);
+        if ($count == 0) {
+            return $tanggapan = 0;
+        }
+        while ($row = mysqli_fetch_array($sql_execute)) {
+            $tanggapan[] = $row;
+        }
+        return $tanggapan;
+    }
+    //Add Tanggapan
+    function AddTanggapan($id_laporan, $nik_petugas, $tgl_tanggapan, $tanggapan)
+    {
+        $sql = "INSERT INTO `tanggapan`(`id_laporan`, `tgl_tanggapan`, `tanggapan`, `nik_petugas`) VALUES ('" . $id_laporan . "','" . $tgl_tanggapan . "','" . $tanggapan . "','" . $nik_petugas . "')";
+        $sql_execute = mysqli_query($this->connection, $sql);
+        return $sql_execute;
+    }
+    //Ubah Status Laporan
+    function EditStatusLaporan($status_laporan, $id_laporan)
+    {
+        $sql = "UPDATE `laporan` SET `status_laporan` = '" . $status_laporan . "' WHERE `laporan`.`id_laporan` = '" . $id_laporan . "';";
+        $sql_execute = mysqli_query($this->connection, $sql);
+        return $sql_execute;
+    }
 }

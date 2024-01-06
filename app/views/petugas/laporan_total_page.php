@@ -108,9 +108,9 @@ $db = new database();
                         <div class="collapse" id="ui-basic">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item"> <a class="nav-link" href="laporan_total_page.php">Total</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="laporan_baru_page.php">Baru</a></li>
+                                <!-- <li class="nav-item"> <a class="nav-link" href="laporan_baru_page.php">Baru</a></li>
                                 <li class="nav-item"> <a class="nav-link" href="laporan_proses_page.php">Proses</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="laporan_selesai_page.php">Selesai</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="laporan_selesai_page.php">Selesai</a></li> -->
 
                             </ul>
                         </div>
@@ -258,7 +258,33 @@ $db = new database();
                                                                     <hr>
                                                                     <h6>Lokasi</h6>
                                                                     <p><?php echo $all_laporan['lokasi_laporan']; ?></p>
+                                                                    <hr>
+                                                                    <h6>Tanggapan Petugas</h6>
+
+                                                                    <?php
+                                                                    if ($db->ShowTanggapan($all_laporan['id_laporan']) == 0) {
+                                                                    ?>
+                                                                        <div class="alert alert-light" role="alert">
+                                                                            <p class="text-dark">Belum ada tanggapan dari petugas</p>
+
+                                                                        </div>
+
+                                                                        <?php
+                                                                    } else {
+                                                                        $SA_tanggapan = $db->ShowTanggapan($all_laporan['id_laporan']);
+                                                                        foreach ($SA_tanggapan as $tanggapan) {
+                                                                        ?><div class="alert alert-light" role="alert">
+                                                                                <p class="text-dark"><?php echo $tanggapan['tanggapan']; ?></p>
+                                                                                <small>-<?php echo $tanggapan['nama_petugas']; ?> - <?php echo $tanggapan['tgl_tanggapan'] ?></small>
+
+                                                                            </div>
+                                                                    <?php
+                                                                        }
+                                                                    };
+                                                                    ?>
+
                                                                 </div>
+
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-primary" data-dismiss="modal">Kembali</button>
 
@@ -278,12 +304,42 @@ $db = new database();
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <?php echo $all_laporan['id_laporan']; ?>
+                                                                    <?php echo $_SESSION['nik_log']; ?>
+                                                                    <!-- Buat Tanggapan -->
+                                                                    <form method="post" action="../../controller/buat_tanggapan_controller.php?">
+                                                                        <input type="hidden" name="nik_petugas" value="<?php echo $_SESSION['nik_log']; ?>">
+                                                                        <input type="hidden" name="id_laporan" value="<?php echo $all_laporan['id_laporan']; ?>">
+                                                                        <div class="form-group">
+                                                                            <label class="">Tanggapan</label>
+                                                                            <textarea name="tanggapan" cols="30" rows="5" class="form-control"></textarea>
+                                                                            <br>
+                                                                            <label for="">Ubah Status Laporan</label>
+                                                                            <select class="form-control" name="status_laporan">
+                                                                                <option <?php if ($all_laporan['status_laporan'] == 'baru') {
+                                                                                            echo 'selected';
+                                                                                        } ?> value="baru">Baru</option>
+                                                                                <option <?php if ($all_laporan['status_laporan'] == 'ditinjau') {
+                                                                                            echo 'selected';
+                                                                                        } ?> value="ditinjau">Ditinjau</option>
+                                                                                <option <?php if ($all_laporan['status_laporan'] == 'diproses') {
+                                                                                            echo 'selected';
+                                                                                        } ?> value="diproses">Diproses</option>
+                                                                                <option <?php if ($all_laporan['status_laporan'] == 'selesai') {
+                                                                                            echo 'selected';
+                                                                                        } ?>value="selesai">Selesai</option>
+                                                                            </select>
+
+                                                                        </div>
+
+
+
 
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                                                                    <button type="button" class="btn btn-primary">Beri Tanggapan</button>
+                                                                    <button type="submit" class="btn btn-primary">Beri Tanggapan</button>
                                                                 </div>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
