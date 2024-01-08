@@ -125,7 +125,7 @@ if (!empty($_SESSION['nik_log'])) {
                                     <div class="card card-light-blue">
                                         <div class="card-body">
                                             <p class="mb-4">Total Tanggapan</p>
-                                            <p class="fs-30 mb-2">3</p>
+                                            <p class="fs-30 mb-2"><?php echo $db->CountTotalTanggapanLP(); ?></p>
 
                                         </div>
                                     </div>
@@ -134,7 +134,7 @@ if (!empty($_SESSION['nik_log'])) {
                                     <div class="card card-light-danger">
                                         <div class="card-body">
                                             <p class="mb-4">Total Petugas</p>
-                                            <p class="fs-30 mb-2">105</p>
+                                            <p class="fs-30 mb-2"><?php echo $db->CountAllPetugas(); ?></p>
 
                                         </div>
                                     </div>

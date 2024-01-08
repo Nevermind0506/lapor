@@ -116,7 +116,7 @@ $db = new database();
                     </li>
                     <!-- TAMBAH LAPORAN -->
                     <!-- PETUGAS -->
-                    <li class="nav-item active">
+                    <li class="nav-item ">
                         <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
                             <i class="icon-head menu-icon"></i>
                             <span class="menu-title">Petugas</span>
@@ -144,7 +144,7 @@ $db = new database();
                             <div class="row">
                                 <div class="col-12 col-xl-8 mb-4 mb-xl-0">
 
-                                    <h3 class="font-weight-bold">Total Petugas yang terdaftar <span class="text-primary"><?php echo $db->CountAllPetugas(); ?></span></h3>
+                                    <h3 class="font-weight-bold">Total Laporan berjumlah <span class="text-primary"><?php echo $db->CountTotalLaporan(); ?></span></h3>
 
                                 </div>
 
@@ -157,9 +157,15 @@ $db = new database();
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
-                                    <h4 class="card-title">Total Petugas yang terdaftar</h4>
+                                    <h4 class="card-title">Total Laporan Anda</h4>
                                     <p class="card-description" style="font-size:small;">
-                                        Berdasarkan data terbaru:
+                                        Penjelasan warna pada status :
+                                        <small style="font-weight: bolder;" class=" mx-1 text-primary">Baru</small>
+                                        <small style="font-weight: bolder;" class=" mx-1 text-info">Ditinjau</small>
+                                        <small style="font-weight: bolder;" class=" mx-1 text-warning">Diproses</small>
+                                        <small style="font-weight: bolder;" class=" mx-1 text-success">Selesai</small>
+
+
                                     </p>
                                 </div>
 
@@ -171,88 +177,159 @@ $db = new database();
                                         <thead>
                                             <tr>
                                                 <th>
-                                                    Nama Petugas
+                                                    Pelapor
                                                 </th>
                                                 <th>
-                                                    Username
+                                                    Deskripsi
                                                 </th>
                                                 <th>
-                                                    No Telp
+                                                    Tanggal
                                                 </th>
                                                 <th>
-                                                    Telah Menanggapi
+                                                    Lokasi
                                                 </th>
                                                 <th>
-                                                    Level
+                                                    Status
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            if ($db->ListPetugas() == 0) {
+                                            if ($db->PetugasShowAllLaporan($_SESSION['nik_log']) == 0) {
                                             ?>
                                                 <tr>
                                                     <td colspan="5">
-                                                        <p class="text-center">Belum ada petugas</p>
+                                                        <p class="text-center">Belum ada laporan</p>
                                                     </td>
                                                 </tr>
                                                 <?php
                                             } else {
-                                                $SA_PETUGAS = $db->ListPetugas();
-                                                foreach ($SA_PETUGAS as $all_petugas) {
+                                                $SA_LAPORAN = $db->PetugasShowAllLaporan();
+                                                foreach ($SA_LAPORAN as $all_laporan) {
                                                 ?>
                                                     <tr>
                                                         <td class="py-1">
-                                                            <?php echo $all_petugas['nama_petugas']; ?>
+                                                            <?php echo $all_laporan['nama_pelapor']; ?>
                                                         </td>
                                                         <td>
-                                                            <?php echo $all_petugas['username_petugas'] ?>
+                                                            <p class="ellipsis"><a href="" data-toggle="modal" data-target="#detailLaporan<?php echo $all_laporan['id_laporan']; ?>"><?php echo $all_laporan['deskripsi_laporan']; ?></a></p>
                                                         </td>
                                                         <td>
-                                                            <?php echo $all_petugas['telp_petugas']; ?>
-                                                        </td>
-                                                        <td class="text-primary, font-weight-bold">
-                                                            <?php echo $db->CountTotalTanggapan($all_petugas['nik_petugas']), " laporan"; ?>
+                                                            <?php echo $all_laporan['tgl_laporan']; ?>
                                                         </td>
                                                         <td>
-                                                            <?php echo $all_petugas['level_petugas']; ?>
+                                                            <?php echo $all_laporan['lokasi_laporan']; ?>
                                                         </td>
+                                                        <td>
+                                                            <div class="progress">
+                                                                <?php
+                                                                if ($all_laporan['status_laporan'] == 'baru') {
+                                                                ?>
+                                                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                <?php
+                                                                } elseif ($all_laporan['status_laporan'] == 'ditinjau') {
+                                                                ?>
+                                                                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                <?php
+                                                                } elseif ($all_laporan['status_laporan'] == 'diproses') {
+                                                                ?>
+                                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                <?php
+                                                                } elseif ($all_laporan['status_laporan'] == 'selesai') {
+                                                                ?>
+                                                                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                <?php
+                                                                }
+                                                                ?>
 
+                                                            </div>
+                                                        </td>
                                                     </tr>
+                                                    <!-- Modal Detail Laporan -->
+                                                    <div class="modal fade" id="detailLaporan<?php echo $all_laporan['id_laporan']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title text-primary" id="exampleModalLabel">Detail Laporan</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <h6>Deskripsi</h6>
+                                                                    <p style="color: darkgrey;"><?php echo $all_laporan['deskripsi_laporan']; ?></p>
+                                                                    <hr>
+                                                                    <h6>Lokasi</h6>
+                                                                    <p><?php echo $all_laporan['lokasi_laporan']; ?></p>
+                                                                    <hr>
+                                                                    <h6>Tanggapan Petugas</h6>
 
+                                                                    <?php
+                                                                    if ($db->ShowTanggapan($all_laporan['id_laporan']) == 0) {
+                                                                    ?>
+                                                                        <div class="alert alert-light" role="alert">
+                                                                            <p class="text-dark">Belum ada tanggapan dari petugas</p>
 
-                                            <?php
-                                                }
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
+                                                                        </div>
+
+                                                                        <?php
+                                                                    } else {
+                                                                        $SA_tanggapan = $db->ShowTanggapan($all_laporan['id_laporan']);
+                                                                        foreach ($SA_tanggapan as $tanggapan) {
+                                                                        ?><div class="alert alert-light" role="alert">
+                                                                                <p class="text-dark"><?php echo $tanggapan['tanggapan']; ?></p>
+                                                                                <small>-<?php echo $tanggapan['nama_petugas']; ?> - <?php echo $tanggapan['tgl_tanggapan'] ?></small>
+
+                                                                            </div>
+                                                                    <?php
+                                                                        }
+                                                                    };
+                                                                    ?>
+
+                                                                </div>
+
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Kembali</button>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
                                 </div>
+
+                        <?php
+                                                }
+                                            }
+                        ?>
+                        </tbody>
+                        </table>
+
                             </div>
                         </div>
                     </div>
-                    <!-- End Row1 -->
-
-
-
-
                 </div>
-                <!-- content-wrapper ends -->
-                <!-- partial:partials/_footer.html -->
-                <footer class="footer">
-                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2024. Kelompok 7</a> from SMK Al Amanah. All rights reserved.</span>
-                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
-                    </div>
+                <!-- End Row1 -->
 
-                </footer>
-                <!-- partial -->
+
+
+
             </div>
-            <!-- main-panel ends -->
-            <!-- Dashboard end -->
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <footer class="footer">
+                <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2024. Kelompok 7</a> from SMK Al Amanah. All rights reserved.</span>
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+                </div>
+
+            </footer>
+            <!-- partial -->
         </div>
-        <!-- page-body-wrapper ends -->
+        <!-- main-panel ends -->
+        <!-- Dashboard end -->
+    </div>
+    <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
 

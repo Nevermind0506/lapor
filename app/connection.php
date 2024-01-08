@@ -96,6 +96,14 @@ class database
         $countAllLaporan = mysqli_num_rows($sql_execute);
         return $countAllLaporan;
     }
+    //Jumlah total tanggapan
+    function CountTotalTanggapanLP()
+    {
+        $sql = "SELECT * FROM tanggapan";
+        $sql_execute = mysqli_query($this->connection, $sql);
+        $count = mysqli_num_rows($sql_execute);
+        return $count;
+    }
     //Jumlah semua laporan tergantung nik login
     function CountAllLaporanWithNik($nik_log)
     {
@@ -268,5 +276,46 @@ class database
         $sql = "UPDATE `laporan` SET `status_laporan` = '" . $status_laporan . "' WHERE `laporan`.`id_laporan` = '" . $id_laporan . "';";
         $sql_execute = mysqli_query($this->connection, $sql);
         return $sql_execute;
+    }
+
+    //----------------ADMIN--------------------
+
+    //Tambah Petugas
+    function AddPetugas($nik_petugas, $nama_petugas, $username_petugas, $pass_petugas, $telp_petugas, $level_petugas)
+    {
+        $sql = "INSERT INTO `petugas`(`nik_petugas`, `nama_petugas`, `username_petugas`, `pass_petugas`, `telp_petugas`, `level_petugas`) VALUES ('" . $nik_petugas . "','" . $nama_petugas . "','" . $username_petugas . "','" . $pass_petugas . "','" . $telp_petugas . "','" . $level_petugas . "')";
+        $sql_execute = mysqli_query($this->connection, $sql);
+        return $sql_execute;
+    }
+
+    //List Petugas & Jumlah Tanggapan
+    function ListPetugas()
+    {
+        $sql = "SELECT petugas.nama_petugas, petugas.username_petugas, petugas.telp_petugas, petugas.nik_petugas, petugas.level_petugas FROM `petugas`;";
+        $sql_execute = mysqli_query($this->connection, $sql);
+        $count = mysqli_num_rows($sql_execute);
+        if ($count == 0) {
+            return $listPetugas = 0;
+        }
+        while ($row = mysqli_fetch_array($sql_execute)) {
+            $listPetugas[] = $row;
+        }
+        return $listPetugas;
+    }
+
+    function CountAllPetugas()
+    {
+        $sql = "SELECT * FROM petugas";
+        $sql_execute = mysqli_query($this->connection, $sql);
+        $count = mysqli_num_rows($sql_execute);
+        return $count;
+    }
+
+    function CountTotalTanggapan($nik_petugas)
+    {
+        $sql = "SELECT * FROM tanggapan WHERE nik_petugas = '" . $nik_petugas . "';";
+        $sql_execute = mysqli_query($this->connection, $sql);
+        $count = mysqli_num_rows($sql_execute);
+        return $count;
     }
 }

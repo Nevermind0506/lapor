@@ -100,7 +100,7 @@ $db = new database();
                         <div class="collapse" id="ui-basic">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item"> <a class="nav-link" href="laporan_total_page.php">Total</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="laporan_baru_page.php">Tanggapan</a></li>
+
 
 
                             </ul>
@@ -116,8 +116,8 @@ $db = new database();
                         </a>
                         <div class="collapse" id="auth">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/login.html"> List Petugas </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/register.html"> Tambah Petugas </a></li>
+                                <li class="nav-item"> <a class="nav-link" href="list_petugas_page.php"> List Petugas </a></li>
+                                <li class="nav-item"> <a class="nav-link" href="tambah_petugas_page.php"> Tambah Petugas </a></li>
                             </ul>
                         </div>
                     </li>
@@ -149,31 +149,23 @@ $db = new database();
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title text-primary">Masukkan data diri petugas</h4>
-                                    <form action="../../controller/buat_laporan_controller.php" method="post" class="form-sample">
+                                    <form action="../../controller/tambah_petugas_controller.php" method="post" class="form-sample">
 
 
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">Kategori</label>
+                                                    <label class="col-sm-3 col-form-label">NIK Petugas</label>
                                                     <div class="col-sm-9">
-                                                        <select name="id_kategori" class="form-control" required>
-                                                            <?php
-                                                            foreach ($db->ShowAllCategory() as $nama_kategori) {
-                                                            ?>
-                                                                <option value="<?= $nama_kategori['id_kategori']; ?>"><?= $nama_kategori['nama_kategori']; ?></option>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </select>
+                                                        <input class="form-control" type="text" name="nik_petugas" required>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">Tanggal</label>
+                                                    <label class="col-sm-3 col-form-label">Nama Lengkap</label>
                                                     <div class="col-sm-9">
-                                                        <input name="tgl_laporan" type="date" class="form-control" placeholder="dd/mm/yyyy" required />
+                                                        <input name="nama_petugas" type="text" class="form-control" required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -181,26 +173,53 @@ $db = new database();
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">Lokasi</label>
+                                                    <label class="col-sm-3 col-form-label">Username</label>
                                                     <div class="col-sm-9">
                                                         <div class="form-group">
-                                                            <textarea name="lokasi_laporan" class="form-control" id="exampleTextarea1" rows="4" required></textarea>
+                                                            <input class="form-control" type="text" name="username_petugas" required>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">Deskripsi</label>
+                                                    <label class="col-sm-3 col-form-label">Password</label>
                                                     <div class="col-sm-9">
                                                         <div class="form-group">
-                                                            <textarea name="deskripsi_laporan" class="form-control" id="exampleTextarea1" rows="4" required></textarea>
+                                                            <input class="form-control" type="text" name="pass_petugas" required>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary ml-1">Buat Laporan</button>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">No. Telp</label>
+                                                    <div class="col-sm-9">
+                                                        <div class="form-group">
+                                                            <input class="form-control" type="text" name="telp_petugas" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Level</label>
+                                                    <div class="col-sm-9">
+                                                        <div class="form-group">
+                                                            <div class="col-sm-9">
+                                                                <select name="level_petugas" class="form-control" required>
+                                                                    <option value="petugas">petugas</option>
+                                                                    <option value="admin">Admin</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary ml-1">Tambahkan</button>
                                         <button type="button" class="btn btn-success" id="triggerButton">Pencet Saya!</button>
                                     </form>
                                 </div>
